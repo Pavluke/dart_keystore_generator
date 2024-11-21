@@ -7,14 +7,19 @@ import 'package:archive/archive_io.dart';
 import 'loc/loc.dart';
 
 /// Версия
-const String version = '0.0.1';
+const String version = '0.0.2';
 
 /// Включает отображение хранилища ключей после его создания,
 /// если `true`
 const bool debug = false;
 
 /// Название вашей организации как подразделения.
-const String yourOrganization = 'Softlex.pro';
+String fullName = 'Flutter Developer';
+String organizationUnitName = 'softlex.pro';
+late String organizationName;
+String city = 'Moscow';
+String state = 'MSK';
+late String countryCode;
 
 /// Функция для генерации случайного пароля
 String generateRandomPassword(int length) {
@@ -35,7 +40,7 @@ bool isValidBundleName(String bundleName) {
 void main() {
   // Загрузка строк локализации
   Localization localization = Locale.fromPlatform().localization;
-
+  countryCode = localization.localCode.toUpperCase();
   // Показываем версию
   print(localization.version(version));
 
@@ -49,6 +54,8 @@ void main() {
       print(localization.invalidPackageName);
       continue;
     } else {
+      organizationName =
+          packageName.split('.').take(2).toList().reversed.join('.');
       break;
     }
   }
@@ -82,7 +89,31 @@ void main() {
       }
     }
   }
-
+  //
+  stdout.write(localization.enterFullName(fullName));
+  if (stdin.readLineSync(encoding: utf8)!.isNotEmpty) {
+    fullName = stdin.readLineSync(encoding: utf8)!;
+  }
+  //
+  stdout.write(localization.enterOrgUnitName(organizationUnitName));
+  if (stdin.readLineSync(encoding: utf8)!.isNotEmpty) {
+    organizationUnitName = stdin.readLineSync(encoding: utf8)!;
+  }
+  //
+  stdout.write(localization.enterOrgName(organizationName));
+  if (stdin.readLineSync(encoding: utf8)!.isNotEmpty) {
+    organizationName = stdin.readLineSync(encoding: utf8)!;
+  }
+  //
+  stdout.write(localization.enterCityOrLocality(city));
+  if (stdin.readLineSync(encoding: utf8)!.isNotEmpty) {
+    city = stdin.readLineSync(encoding: utf8)!;
+  }
+  //
+  stdout.write(localization.enterStateOrProvince(state));
+  if (stdin.readLineSync(encoding: utf8)!.isNotEmpty) {
+    state = stdin.readLineSync(encoding: utf8)!;
+  }
   // Удаление старых файлов, если они существуют
   List<String> filesToDelete = ['key.jks', 'key.properties'];
   for (String file in filesToDelete) {
@@ -110,7 +141,7 @@ void main() {
       '-keypass',
       password,
       '-dname',
-      'CN=Flutter Developer, OU=$yourOrganization, O=$packageName, L=Moscow, ST=Moscow, C=${localization.localCode.toUpperCase()}}'
+      'CN=$fullName, OU=$organizationName, O=$packageName, L=$city, ST=$state, C=$countryCode}'
     ],
   );
 
@@ -140,7 +171,7 @@ void main() {
   File propertiesFile = File('key.properties');
   propertiesFile.writeAsStringSync('''
 ## Package name: $packageName
-## Created at: $now
+## Generated at: $now
 
 storePassword=$password
 keyPassword=$password

@@ -31,7 +31,7 @@ class RuLocalization extends Localization {
 
   @override
 
-  /// `Файл хранилища ключей и key.properties успешно созданы!`
+  /// `Файлы key.jks и key.properties успешно созданы!`
   String get successMessage =>
       'Файл хранилища ключей и key.properties успешно созданы!';
 
@@ -53,4 +53,27 @@ class RuLocalization extends Localization {
 
   /// `Некорректное имя пакета приложения!`
   String get invalidPackageName => 'Некорректное имя пакета приложения!';
+
+  /// `Введите ваше полное имя [$name]: `
+  @override
+  String enterFullName(String name) => 'Введите ваше полное имя [$name]: ';
+
+  /// `Введите ваше подразделение в компании [$unit]: `
+  @override
+  String enterOrgUnitName(String unit) =>
+      'Введите ваше подразделение в компании [$unit]: ';
+
+  /// `Введите название компании [$organization]: `
+  @override
+  String enterOrgName(String organization) =>
+      'Введите название компании [$organization]: ';
+
+  /// `Введите город [$city]: `
+  @override
+  String enterCityOrLocality(String city) => 'Введите город [$city]: ';
+
+  /// `Введите городскую область [Moscow]: `
+  @override
+  String enterStateOrProvince(String state) =>
+      'Введите городскую область [$state]: ';
 }

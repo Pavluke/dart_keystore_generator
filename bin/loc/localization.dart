@@ -28,4 +28,19 @@ abstract class Localization {
 
   /// `App name must be not empty!`
   String get invalidPackageName;
+
+  /// `Enter your first and last name [$name]: `
+  String enterFullName(String name);
+
+  /// `Enter the name of your organizational unit [$unit]: `
+  String enterOrgUnitName(String unit);
+
+  /// `Enter the name of your organization [$organization]: `
+  String enterOrgName(String organization);
+
+  /// `Enter the name of your City or Locality [$city]: `
+  String enterCityOrLocality(String city);
+
+  /// `Enter the name of your State or Province [$state]: `
+  String enterStateOrProvince(String state);
 }
